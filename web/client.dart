@@ -14,13 +14,30 @@ class Client {
   InputElement inputElement = querySelector("#speak");
   DivElement context = querySelector("#context");
   
+  //name
+  InputElement nameElement = querySelector("#name");
+  
+  //2 parts
+  DivElement enterScreen = querySelector("#enter_screen");
+  DivElement chatScreen = querySelector("#chat_screen");
+  
+  String chatName;
+  
   Client() {
     inputElement.onChange.listen((e) {
       var request = {
+          'name': chatName,
           'line': inputElement.value
       };
       forceClient.send('text', request);
       inputElement.value = '';
+    });
+    
+    nameElement.onChange.listen((e) {
+      chatName = nameElement.value;
+      enterScreen.style.display = "none";
+      chatScreen.style.display = "block";
+      inputElement.focus();
     });
     
     forceClient = new ForceClient();
@@ -35,7 +52,7 @@ class Client {
     });
     
     forceClient.on("text", (e, sender) {
-      addText(e.json['line']);
+      addText(e.json['name'], e.json['line']);
     });
   }
 
@@ -62,10 +79,10 @@ class Client {
      print("response on: '$request' with $json");
   }
 
-  void addText(String text) {
+  void addText(String name, String text) {
     print("coming text in $text");
     var result = new DivElement();
-    result.innerHtml = text;
+    result.innerHtml = "$name : $text";
     context.children.add(result);
   }
 }

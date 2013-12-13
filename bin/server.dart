@@ -5,7 +5,6 @@ import 'package:logging/logging.dart' show Logger, Level, LogRecord;
 
 
 import 'package:force/force_server.dart';
-import 'package:force/force_common.dart';
 
 final Logger log = new Logger('ChatApp');
 
@@ -20,8 +19,7 @@ void main() {
   
   vs.on('text', (e, sendable) { 
     var json = e.json;
-    var line = json['line'];
-    sendable.send('text', { 'line': line });
+    sendable.send('text', { 'line': json['line'], 'name': json['name'] });
   });
   
   vs.start().then((_) {

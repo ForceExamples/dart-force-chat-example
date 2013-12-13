@@ -11,6 +11,15 @@
       <link href="css/bootflat.css" rel="stylesheet" media="screen">
       <link href="css/bootflat-extensions.css" rel="stylesheet" media="screen">
       <link href="css/bootflat-square.css" rel="stylesheet" media="screen">
+      <style>
+        #context-wrapper {
+          min-height: 400px;
+        }
+        #context {
+          position: absolute;
+          bottom: 0;
+        }
+      </style>
   </head>
   <body>
     <div class="container">
@@ -18,12 +27,20 @@
         <h1>Force Chat Example</h1>
         <div id="status"></div>
       </header>
-      <div class="row">
-        <div class="col-xs-12">
-          <div id="context"></div>
+      <div id="enter_screen">
+        <div class="row">
+          <div class="col-xs-6">Enter a chatname:</div>
+          <div class="col-xs-6"><input class="form-control speak" type="text" value="" id="name" /></div>
         </div>
       </div>
-      <input class="form-control" type="text" value="" id="speak" disabled/>
+      <div id="chat_screen" style="display: none;">
+        <div class="row">
+          <div class="col-xs-12">
+            <div id="context-wrapper"><div id="context"></div></div>
+          </div>
+        </div>
+        <input class="form-control speak" type="text" value="" id="speak" disabled/>
+      </div>
     </div>
   </body>
 </html>
