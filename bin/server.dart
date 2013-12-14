@@ -4,7 +4,7 @@ import 'dart:async';
 import 'package:logging/logging.dart' show Logger, Level, LogRecord;
 
 
-import 'package:force/force_server.dart';
+import 'package:force/force_serverside.dart';
 
 final Logger log = new Logger('ChatApp');
 
@@ -15,16 +15,16 @@ void main() {
     print('${rec.level.name}: ${rec.time}: ${rec.message}');
   });
 
-  ForceServer vs = new ForceServer(wsPath: "/ws", port: 9223 );
+  ForceServer fs = new ForceServer(wsPath: "/ws", port: 9223, startPage: "forcechat.html" );
   
-  vs.on('text', (e, sendable) { 
+  fs.on('text', (e, sendable) { 
     var json = e.json;
     sendable.send('text', { 'line': json['line'], 'name': json['name'] });
   });
   
-  vs.start().then((_) {
-    vs.serve("/client.dart").listen((request) { 
-      vs.serveFile("../web/client.dart", request);
+  fs.start().then((_) {
+    fs.serve("/client.dart").listen((request) { 
+      fs.serveFile("../web/client.dart", request);
     });
   });
 }
