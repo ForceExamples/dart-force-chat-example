@@ -40,6 +40,8 @@ class Client {
       inputElement.focus();
     });
     
+    nameElement.focus();
+    
     forceClient = new ForceClient();
     forceClient.connect();
     
