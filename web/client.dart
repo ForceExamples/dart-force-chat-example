@@ -24,12 +24,34 @@ class Client {
   String chatName;
   
   Client() {
+    forceClient = new ForceClient();
+    forceClient.connect();
+    
     inputElement.onChange.listen((e) {
-      var request = {
-          'name': chatName,
-          'line': inputElement.value
-      };
-      forceClient.send('text', request);
+      String value = inputElement.value;
+      if (value.startsWith("private ")) {
+        print("going private!");
+        String subValue = value.substring(8);
+        String sendName = subValue.substring(0, subValue.indexOf(" "));
+        
+        String sendValue = subValue.substring(sendName.length);
+        
+        print("name! $sendName");
+        print("name! $sendValue");
+        var request = {
+                       'name': chatName,
+                       'line': sendValue
+        };
+        forceClient.sendToProfile('name', sendName, 'private', request);
+        
+        addText("private to $sendName", sendValue);
+      } else {
+        var request = {
+            'name': chatName,
+            'line': inputElement.value
+        };
+        forceClient.send('text', request);
+      }
       inputElement.value = '';
     });
     
@@ -38,12 +60,12 @@ class Client {
       enterScreen.style.display = "none";
       chatScreen.style.display = "block";
       inputElement.focus();
+      
+      var profileInfo = { 'name' : chatName};
+      forceClient.initProfileInfo(profileInfo);
     });
     
     nameElement.focus();
-    
-    forceClient = new ForceClient();
-    forceClient.connect();
     
     forceClient.onConnecting.listen((e) {
       if (e.type=="connected") {
@@ -55,6 +77,10 @@ class Client {
     
     forceClient.on("text", (e, sender) {
       addText(e.json['name'], e.json['line']);
+    });
+    
+    forceClient.on("private", (e, sender) {
+      addPrivate(e.json['name'], e.json['line']);
     });
   }
 
@@ -85,6 +111,13 @@ class Client {
     print("coming text in $text");
     var result = new DivElement();
     result.innerHtml = "$name : $text";
+    context.children.add(result);
+  }
+  
+  void addPrivate(String name, String text) {
+    print("coming private text in $text");
+    var result = new DivElement();
+    result.innerHtml = "private message from <b>$name</b> : $text";
     context.children.add(result);
   }
 }
