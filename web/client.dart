@@ -13,6 +13,7 @@ class Client {
   //Chat ??
   InputElement inputElement = querySelector("#speak");
   DivElement context = querySelector("#context");
+  DivElement chatListElement = querySelector("#nameslist");
   
   //name
   InputElement nameElement = querySelector("#name");
@@ -56,6 +57,8 @@ class Client {
     });
     
     nameElement.onChange.listen((e) {
+      e.preventDefault();
+      
       chatName = nameElement.value;
       enterScreen.style.display = "none";
       chatScreen.style.display = "block";
@@ -63,11 +66,16 @@ class Client {
       
       var profileInfo = { 'name' : chatName};
       forceClient.initProfileInfo(profileInfo);
+      
+      forceClient.send('list', {});
+      
+      e.stopPropagation();
     });
     
     nameElement.focus();
     
     forceClient.onConnecting.listen((e) {
+      print("connection changed $e");
       if (e.type=="connected") {
         onConnected();
       } else if (e.type=="disconnected") {
@@ -81,6 +89,21 @@ class Client {
     
     forceClient.on("private", (e, sender) {
       addPrivate(e.json['name'], e.json['line']);
+    });
+    
+    forceClient.on("list", (e, sender) {
+      
+      addChatNames(e.json);
+    });
+    
+    forceClient.on("entered", (e, sender) {
+      if (chatName!=e.json['name']) {
+        addChatName(e.json['name']);
+      }
+    });
+    
+    forceClient.on("leaved", (e, sender) {
+      removeChatName(e.json['name']);
     });
   }
 
@@ -119,6 +142,31 @@ class Client {
     var result = new DivElement();
     result.innerHtml = "private message from <b>$name</b> : $text";
     context.children.add(result);
+  }
+  
+  void addChatNames(chatnames) { 
+    print("$chatnames");
+    chatListElement.children.clear();
+    for (var name in chatnames) {
+      addChatName(name);
+    }
+  }
+  
+  void addChatName(name) {
+    var result = new DivElement();
+    result.innerHtml = "$name";
+    chatListElement.children.add(result);
+  }
+  
+  void removeChatName(removedName) {
+    print("$removedName will be removed");
+    Element removed;
+    for (Element el in chatListElement.children) {
+      if (el.innerHtml == removedName) {
+        removed = el;
+      }
+    }
+    chatListElement.children.remove(removed);
   }
 }
 

@@ -14,12 +14,33 @@ void main() {
   Logger.root.onRecord.listen((LogRecord rec) {
     print('${rec.level.name}: ${rec.time}: ${rec.message}');
   });
-
+  
   ForceServer fs = new ForceServer(wsPath: "/ws", port: 9223, startPage: "forcechat.html" );
   
   fs.on('text', (e, sendable) { 
     var json = e.json;
     sendable.send('text', { 'line': json['line'], 'name': json['name'] });
+  });
+  
+  // Profile shizzle
+  List<String> chatNames = new List<String>();
+  fs.onProfileChanged.listen((e) {
+    String name = e.profileInfo['name'];
+    if (e.type == ForceProfileType.New) {
+      chatNames.add(name);
+      
+      fs.send('entered', { 'name' : name });
+    }
+    if (e.type == ForceProfileType.Removed) {
+      chatNames.remove(name);
+      
+      fs.send('leaved', { 'name' : name });
+    }
+  });
+  
+  fs.on('list', (e, sendable) { 
+    print("ask list!?");
+    sendable.sendTo(e.wsId, 'list', chatNames);
   });
   
   fs.start().then((_) {
