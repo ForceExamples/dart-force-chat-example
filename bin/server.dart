@@ -14,7 +14,10 @@ void main() {
     print('${rec.level.name}: ${rec.time}: ${rec.message}');
   });
   
-  ForceServer fs = new ForceServer(host: InternetAddress.ANY_IP_V4, port: 9223, startPage: "forcechat.html" );
+  var portEnv = Platform.environment['PORT'];
+  var port = portEnv == null ? 9223 : int.parse(portEnv);
+  
+  ForceServer fs = new ForceServer(host: InternetAddress.ANY_IP_V4, port: port, startPage: "forcechat.html" );
   
   fs.on('text', (e, sendable) {  
     var json = e.json;
