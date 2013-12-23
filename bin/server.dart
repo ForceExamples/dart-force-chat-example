@@ -15,9 +15,9 @@ void main() {
   });
   
   var portEnv = Platform.environment['PORT'];
-  var port = portEnv == null ? 9223 : int.parse(portEnv);
+  var port = portEnv == null ? 8080 : int.parse(portEnv);
   
-  ForceServer fs = new ForceServer(host: InternetAddress.ANY_IP_V4, port: port, startPage: "forcechat.html" );
+  ForceServer fs = new ForceServer(host: "0.0.0.0", port: port, startPage: "forcechat.html" );
   
   fs.on('text', (e, sendable) {  
     var json = e.json;
