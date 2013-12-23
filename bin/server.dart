@@ -16,7 +16,7 @@ void main() {
     print('${rec.level.name}: ${rec.time}: ${rec.message}');
   });
   
-  ForceServer fs = new ForceServer(wsPath: "/ws", bind_address: InternetAddress.ANY_IP_V4, port: 9223, startPage: "forcechat.html" );
+  ForceServer fs = new ForceServer(wsPath: "/ws", host: InternetAddress.ANY_IP_V4, port: 9223, startPage: "forcechat.html" );
   
   fs.on('text', (e, sendable) { 
     var json = e.json;
