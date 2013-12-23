@@ -3,8 +3,6 @@ library chat_example_force;
 import 'dart:async';
 import 'dart:io';
 import 'package:logging/logging.dart' show Logger, Level, LogRecord;
-
-
 import 'package:force/force_serverside.dart';
 
 final Logger log = new Logger('ChatApp');
@@ -16,7 +14,7 @@ void main() {
     print('${rec.level.name}: ${rec.time}: ${rec.message}');
   });
   
-  ForceServer fs = new ForceServer(wsPath: "/ws", host: InternetAddress.ANY_IP_V4, port: 9223, startPage: "forcechat.html" );
+  ForceServer fs = new ForceServer(host: InternetAddress.ANY_IP_V4, port: 9223, startPage: "forcechat.html" );
   
   fs.on('text', (e, sendable) {  
     var json = e.json;
