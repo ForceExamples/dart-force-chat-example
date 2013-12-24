@@ -119,6 +119,8 @@ class Client {
   void onDisconnected() {
     setStatus('Disconnected - start \'bin/server.dart\' to continue');
     inputElement.disabled = true;
+    
+    // forceClient.onConnecting.listen((e)=> print("connection ... on ..."));
   }
 
   void setStatus(String status) {
