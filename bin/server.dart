@@ -22,6 +22,10 @@ void main() {
   fs.on('text', (e, sendable) {  
     var json = e.json;
     sendable.send('text', { 'line': json['line'], 'name': json['name'] });
+    
+    if (json['line']=='close') {
+      fs.close(e.wsId);
+    }
   });
   
   // Profile shizzle
@@ -33,6 +37,13 @@ void main() {
       
       fs.send('entered', { 'name' : name });
     }
+    if (e.type == ForceProfileType.ChangedProperty) {
+      chatNames.add(name);
+      fs.send('entered', { 'name' : name });
+      
+      chatNames.remove(e.property.value);
+      fs.send('leaved', { 'name' : e.property.value });
+    }
     if (e.type == ForceProfileType.Removed) {
       chatNames.remove(name);
       
@@ -41,7 +52,6 @@ void main() {
   });
   
   fs.on('list', (e, sendable) { 
-    print("ask list!?");
     sendable.sendTo(e.wsId, 'list', chatNames);
   });
   
