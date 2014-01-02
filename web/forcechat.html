@@ -32,6 +32,10 @@
         .mheight {
           min-height: 200px;
         }
+        .small {
+          font-size: 10pt;
+          color: #aaa;
+        }
       </style>
   </head>
   <body>
@@ -42,21 +46,30 @@
       </header>
       <div id="enter_screen">
         <div class="row">
-          <div class="col-xs-6">
+          <div class="col-xs-12 col-md-6">
             <div class="box">
                 Enter a chatname:
                 <input class="form-control speak" type="text" value="" id="name" />
             </div>
           </div>
         </div>
+        <div class="row">
+          <div class="col-xs-12 col-md-6 small">
+            This chat application is an example of the <a href="https://github.com/jorishermans/dart-force">dart force framework</a>! 
+            <br />
+            <br />
+            You can find the sourcecode of this example <a href="https://github.com/jorishermans/dart-force-chat-example">here</a>
+          </div>
+        </div>
       </div>
       <div id="chat_screen" style="display: none;">
         <div class="row">
-          <div class="col-xs-3">
+          <div class="hidden-xs col-md-3">
              <div class="box mheight">
               <h3>Online list</h3>
               <div id="nameslist"></div>
             </div>
+            <div class="small"><a id="backLink" href="#">enter new name</a></div>
           </div>
           <div class="col-xs-9">
             <div class="row">

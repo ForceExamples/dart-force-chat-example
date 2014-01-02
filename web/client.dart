@@ -14,6 +14,7 @@ class Client {
   InputElement inputElement = querySelector("#speak");
   DivElement context = querySelector("#context");
   DivElement chatListElement = querySelector("#nameslist");
+  AnchorElement backElement = querySelector("#backLink");
   
   //name
   InputElement nameElement = querySelector("#name");
@@ -22,9 +23,10 @@ class Client {
   DivElement enterScreen = querySelector("#enter_screen");
   DivElement chatScreen = querySelector("#chat_screen");
   
-  String chatName;
+  String chatName; 
   
   Client() {
+    print('start force client!');
     forceClient = new ForceClient();
     forceClient.connect();
     
@@ -70,6 +72,13 @@ class Client {
       forceClient.send('list', {});
       
       e.stopPropagation();
+    });
+    
+    backElement.onClick.listen((e) {
+      enterScreen.style.display = "block";
+      chatScreen.style.display = "none";
+      
+      inputElement.focus();
     });
     
     nameElement.focus();
