@@ -27,7 +27,7 @@ class Client {
   
   Client() {
     print('start force client!');
-    forceClient = new ForceClient();
+    forceClient = new ForceClient(usePolling: true);
     forceClient.connect();
     
     inputElement.onChange.listen((e) {
@@ -83,13 +83,12 @@ class Client {
     
     nameElement.focus();
     
-    forceClient.onConnecting.listen((e) {
-      print("connection changed $e");
-      if (e.type=="connected") {
+    forceClient.onConnected.listen((e) {
         onConnected();
-      } else if (e.type=="disconnected") {
-        onDisconnected();
-      }
+    });
+    
+    forceClient.onDisconnected.listen((e) {
+      onDisconnected();
     });
     
     forceClient.on("text", (e, sender) {
