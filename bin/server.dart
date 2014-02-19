@@ -4,6 +4,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:logging/logging.dart' show Logger, Level, LogRecord;
 import 'package:force/force_serverside.dart';
+import 'package:route/server.dart' show UrlPattern;
 
 final Logger log = new Logger('ChatApp');
 
@@ -56,8 +57,11 @@ void main() {
   });
   
   fs.start().then((_) {
-    fs.serve("/client.dart").listen((request) { 
-      fs.serveFile("../web/client.dart", request);
+    var pattern = new UrlPattern(r'([/|.|\w|\s])*\.(?:dart)');
+    fs.serve(pattern).listen((request) {
+      var path = request.uri.path;
+      print("this is a $path");
+      fs.serveFile("../web/$path", request);
     });
   });
 }
