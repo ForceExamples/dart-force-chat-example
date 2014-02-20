@@ -56,12 +56,5 @@ void main() {
     sendable.sendTo(e.wsId, 'list', chatNames);
   });
   
-  fs.start().then((_) {
-    var pattern = new UrlPattern(r'([/|.|\w|\s])*\.(?:dart)');
-    fs.serve(pattern).listen((request) {
-      var path = request.uri.path;
-      print("this is a $path");
-      fs.serveFile("../web/$path", request);
-    });
-  });
+  fs.start();
 }

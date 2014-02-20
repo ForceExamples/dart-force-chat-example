@@ -27,7 +27,7 @@ class Client {
   
   Client() {
     print('start force client!');
-    forceClient = new ForceClient(usePolling: true);
+    forceClient = new ForceClient();
     forceClient.connect();
     
     inputElement.onChange.listen((e) {
