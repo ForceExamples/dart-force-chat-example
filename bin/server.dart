@@ -4,7 +4,6 @@ import 'dart:async';
 import 'dart:io';
 import 'package:logging/logging.dart' show Logger, Level, LogRecord;
 import 'package:force/force_serverside.dart';
-import 'package:route/server.dart' show UrlPattern;
 
 final Logger log = new Logger('ChatApp');
 
