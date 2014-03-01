@@ -23,8 +23,12 @@ Click on server.dart and then click on the green play button in the dart editor
 
 ##### Step 3 #####
 
+See the info in the console, and what the address is of the server!
+
 ![STEP3!](https://raw.github.com/jorishermans/dart-force-chat-example/master/walkthrough/step3.png)
 
 ##### Step 4 #####
+
+Go to localhost:8080 or your computername with port 8080.
 
 ![STEP4!](https://raw.github.com/jorishermans/dart-force-chat-example/master/walkthrough/step4.png)
