@@ -7,10 +7,10 @@ framework: force
 
 handlers:
 - url: /
+  match: preregex
   script: server.dart
 
 # Static content, will be served by your app's Nginx instance   
 - url: /
-  match: preregex
   static_dir: web
   
