@@ -10,7 +10,7 @@ handlers:
   script: server.dart
 
 # Static content, will be served by your app's Nginx instance   
-- url: /web
+- url: /
   match: preregex
   static_dir: web
   
