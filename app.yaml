@@ -7,10 +7,27 @@ framework: force
 
 handlers:
 - url: /
-  match: preregex
   script: server.dart
 
 # Static content, will be served by your app's Nginx instance   
-- url: /
+- url: /index.html
+  match: preregex
   static_dir: web
+  
+- url: /client.dart
+  match: preregex
+  static_dir: web
+  
+- url: /css
+  match: preregex
+  static_dir: web/css
+  
+- url: /fonts
+  match: preregex
+  static_dir: web/fonts
+  
+- url: /img
+  match: preregex
+  static_dir: web/img
+
   
