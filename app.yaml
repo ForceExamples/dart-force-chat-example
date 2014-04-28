@@ -6,28 +6,17 @@ dart2js: true
 framework: force
 
 handlers:
-- url: /
+- url: /ws
+  script: server.dart
+  
+- url: /text
+  script: server.dart
+  
+- url: /list
   script: server.dart
 
 # Static content, will be served by your app's Nginx instance   
-- url: /index.html
+- url: /
   match: preregex
   static_dir: web
-  
-- url: /client.dart
-  match: preregex
-  static_dir: web
-  
-- url: /css
-  match: preregex
-  static_dir: web/css
-  
-- url: /fonts
-  match: preregex
-  static_dir: web/fonts
-  
-- url: /img
-  match: preregex
-  static_dir: web/img
-
   
