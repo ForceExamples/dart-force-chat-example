@@ -21,7 +21,7 @@ void main() {
   
   // Create a force server
   ForceServer fs = new ForceServer(port: port, 
-                                   clientFiles: '../client/',
+                                   clientFiles: '../client/web',
                                    clientServe: serveClient);
   
   // Setup handler for "/text"
