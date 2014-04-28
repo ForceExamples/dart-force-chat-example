@@ -17,6 +17,6 @@ handlers:
 
 # Static content, will be served by your app's Nginx instance   
 - url: /
-  match: preregex
+  match: postregex
   static_dir: web
   
