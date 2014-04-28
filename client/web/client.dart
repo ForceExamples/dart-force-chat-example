@@ -26,7 +26,7 @@ class Client {
   String chatName; 
   
   Client() {
-    print('start force client!');
+    print('Starting force client!');
     forceClient = new ForceClient();
     forceClient.connect();
     

@@ -1,0 +1,22 @@
+application: Force Chat Example 
+version: 1
+deploy: true
+pub: true
+dart2js: true 
+framework: force
+
+handlers:
+- url: /ws
+  script: server.dart
+  
+- url: /text
+  script: server.dart
+  
+- url: /list
+  script: server.dart
+
+# Static content, will be served by your app's Nginx instance   
+- url: /
+  match: postregex
+  static_dir: web
+  

@@ -14,11 +14,17 @@ void main() {
     print('${rec.level.name}: ${rec.time}: ${rec.message}');
   });
   
+  // Setup what port to listen to 
   var portEnv = Platform.environment['PORT'];
   var port = portEnv == null ? 8080 : int.parse(portEnv);
+  var serveClient = portEnv == null ? true : false;
   
-  ForceServer fs = new ForceServer(host: "0.0.0.0", port: port, startPage: "forcechat.html" );
+  // Create a force server
+  ForceServer fs = new ForceServer(port: port, 
+                                   clientFiles: '../client/web',
+                                   clientServe: serveClient);
   
+  // Setup handler for "/text"
   fs.on('text', (e, sendable) {  
     var json = e.json;
     sendable.send('text', { 'line': json['line'], 'name': json['name'] });
@@ -51,9 +57,12 @@ void main() {
     }
   });
   
+  // Setup handler for "/list" 
   fs.on('list', (e, sendable) { 
     sendable.sendTo(e.wsId, 'list', chatNames);
   });
   
+  // Start force server 
   fs.start();
 }
+
