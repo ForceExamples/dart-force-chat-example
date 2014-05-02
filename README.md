@@ -7,6 +7,14 @@ I am using bootflat and dart force here to show how dart force is working with s
 
 View it at heroku > [see demo](http://forcechat.herokuapp.com/)
 
+#### Notes ####
+
+Clone the repo
+Open the directory in DartEditor, wait for a few seconds for pub to finish
+(If warning show, press reanalyze source on the project directory)
+Right click server/server.dart and press run
+Go to http://localhost:8080/
+
 #### Walkthrough ####
 
 ##### Step 1 #####
