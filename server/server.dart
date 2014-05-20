@@ -1,19 +1,9 @@
 library chat_example_force;
 
-import 'dart:async';
 import 'dart:io';
-import 'package:logging/logging.dart' show Logger, Level, LogRecord;
 import 'package:force/force_serverside.dart';
 
-final Logger log = new Logger('ChatApp');
-
 void main() {
-  // Set up logger.
-  Logger.root.level = Level.ALL;
-  Logger.root.onRecord.listen((LogRecord rec) {
-    print('${rec.level.name}: ${rec.time}: ${rec.message}');
-  });
-  
   // Setup what port to listen to 
   var portEnv = Platform.environment['PORT'];
   var port = portEnv == null ? 8080 : int.parse(portEnv);
@@ -23,6 +13,9 @@ void main() {
   ForceServer fs = new ForceServer(port: port, 
                                    clientFiles: '../client/build/web/',
                                    clientServe: serveClient);
+  
+  // Setup logger
+  fs.setupConsoleLog();
   
   // Setup handler for "/text"
   fs.on('text', (e, sendable) {  
